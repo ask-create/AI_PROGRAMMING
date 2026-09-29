@@ -1,0 +1,35 @@
+from heapq import heappush, heappop
+graph = {}
+heuristic = {}
+n = int(input("Enter number of nodes: "))
+for i in range(n):
+    node = input("\nEnter node name: ").upper()
+    e = int(input("Enter number of neighbors: "))
+    graph[node] = []
+    for j in range(e):
+        nbr = input("Neighbor: ").upper()
+        cost = int(input("Cost: "))
+        graph[node].append((nbr, cost))
+    heuristic[node] = int(input("Heuristic value: "))
+start = input("\nEnter Start Node: ").upper()
+goal = input("Enter Goal Node: ").upper()
+def astar(start, goal):
+    open_list = []
+    heappush(open_list, (heuristic[start], 0, start, [start]))
+    visited = set()
+    while open_list:
+        f, tc, node, path = heappop(open_list)
+        if node == goal:
+            print("\nShortest Path :", " -> ".join(path))
+            print("Path Cost :", tc)
+            return
+        if node in visited:
+            continue
+        visited.add(node)
+        for nbr, cost in graph[node]:
+            if nbr not in visited:
+                g = tc + cost
+                f = g + heuristic[nbr]
+                heappush(open_list, (f, g, nbr, path + [nbr]))
+    print("No Path Found")
+astar(start, goal)
