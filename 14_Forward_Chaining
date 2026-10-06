@@ -1,0 +1,31 @@
+facts = {"raining"}
+rules = [
+    ("raining", "ground is wet"),
+    ("ground is wet", "road is slippery"),
+    ("road is slippery", "drive carefully")
+]
+def forward_chaining(facts, rules):
+    facts = set(facts)
+
+    while True:
+        new_fact_added = False
+
+        for condition, conclusion in rules:
+            # Check if condition is present in facts
+            if condition in facts and conclusion not in facts:
+                facts.add(conclusion)
+                print("Rule applied:", 
+                      "If", condition, "->", conclusion)
+                print("New fact:", conclusion)
+                new_fact_added = True
+
+        if not new_fact_added:
+            break
+
+    return facts
+
+final_facts = forward_chaining(facts, rules)
+
+print("\nFinal set of facts:")
+for fact in final_facts:
+    print("-", fact)
