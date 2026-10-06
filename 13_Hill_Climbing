@@ -1,0 +1,26 @@
+import random
+a = list(map(int, input("Enter current value and neighbors: ").split()))
+x = a[0]
+n = a[1:]
+print("\nInitial Solution:", x)
+for y in n:    # Simple
+    if y > x:
+        x = y
+        break
+print("\nSimple Hill Climbing:")
+print("Solution =", x)
+print("Value    =", x)
+x = a[0]   # Steepest
+b = max(n)
+if b > x:
+    x = b
+print("\nSteepest-Ascent Hill Climbing:")
+print("Solution =", x)
+print("Value    =", x)
+x = a[0]    # Stochastic
+b = [y for y in n if y > x]
+if b:
+    x = random.choice(b)
+print("\nStochastic Hill Climbing:")
+print("Solution =", x)
+print("Value    =", x)
